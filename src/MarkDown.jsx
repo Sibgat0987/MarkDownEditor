@@ -122,7 +122,7 @@ const handleMarkdownChange = (e) => {
 ))}
 </ul>
 </div>)}
-    <div className='bg-[url("background.jpeg")] flex flex-col items-center justify-center h-screen bg-cover bg-center'>
+    <div className='bg-[url("/background.jpeg")] flex flex-col items-center justify-center h-screen bg-cover bg-center'>
   <h2 className='mb-4 font-mono text-5xl'>Welcome!</h2>
   <button onClick={createFile} className='bg-blue-500 text-white py-2 px-9 rounded hover:bg-blue-700'>
     Create a new file
