@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 function MarkDown() {
   const [markDown, setMarkDown] = useState("Enter your text");
-  const [fileName, setFileName] = useState("markdown.txt");
+  const [fileName, setFileName] = useState("markdown.md");
   const[showmarkdown,setShowmarkdown]=useState(false);
   const [showFileContainer, setShowFileContainer] = useState(false);
   const [showFileInput, setShowFileInput] = useState(false);
@@ -26,7 +26,7 @@ function MarkDown() {
     }));
   };
   const downloadMarkdown = () => {
-    const blob = new Blob([markDown], { type: 'text/plain' });
+    const blob = new Blob([markDown], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -108,7 +108,7 @@ const handleMarkdownChange = (e) => {
   <h1 className='mx-auto'>Markdown Editor</h1>
 </div>
 
-{showFileContainer &&( <div className='absolute top-20 left-0 bg-white h-screen w-64 flex flex-col items-center '>
+{showFileContainer &&( <div className='absolute top-20 left-0 bg-white h-screen w-64 flex flex-col items-center border-gray-200 '>
 <h3 className='font-bold text-lg mb-2 mt-2'>Created Files</h3>
 <ul className='flex flex-col items-start p-0 '>
 {createdFiles.map((file,index)=>(
