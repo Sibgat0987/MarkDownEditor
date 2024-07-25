@@ -18,12 +18,13 @@ function MarkDown() {
     setCreatedFiles(savedFiles);
     setFileContents(savedFileContents);
   }, []);
-  useEffect(() => {
-    console.log("Saving files to localStorage", createdFiles, fileContents);
-
-    localStorage.setItem('createdFiles', JSON.stringify(createdFiles));
-    localStorage.setItem('fileContents', JSON.stringify(fileContents));
-  }, [createdFiles, fileContents]);
+  const updateLocalStorage = (files, contents) => {
+    localStorage.setItem('createdFiles', JSON.stringify(files));
+    localStorage.setItem('fileContents', JSON.stringify({
+      ...JSON.parse(localStorage.getItem('fileContents') || '{}'),
+      ...contents
+    }));
+  };
   const downloadMarkdown = () => {
     const blob = new Blob([markDown], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -36,21 +37,30 @@ function MarkDown() {
     URL.revokeObjectURL(url);
   };
 
-const saveFile=()=>{
-  if (fileName.trim() === "") return;
-  if (createdFiles.includes(fileName)) {
-    alert("A file with this name already exists. Please choose a different name.");
-    return;
-  }
-  setCreatedFiles(prev=>[...prev, fileName]);
-  setFileContents(prev=>({ ...prev, [fileName]: markDown }));
-  
-  setShowFileContainer(true)
-
-  setShowFileInput(false);
-  
-
-}
+  const saveFile = () => {
+    if (fileName.trim() === "") return;
+    
+    setCreatedFiles(prev => {
+      if (!prev.includes(fileName)) {
+        return [...prev, fileName];
+      }
+      return prev;
+    });
+    
+    setFileContents(prev => ({
+      ...prev,
+      [fileName]: markDown
+    }));
+    
+    setShowFileContainer(true);
+    setShowFileInput(false);
+    
+    const updatedCreatedFiles = createdFiles.includes(fileName)
+      ? createdFiles
+      : [...createdFiles, fileName];
+    
+    updateLocalStorage(updatedCreatedFiles, fileContents);
+  };
 const createFile=()=>{
   setShowFileInput(true)
    //saveFile()
@@ -64,6 +74,8 @@ const deleteFile = (fileToDelete) => {
       return updatedContents;
     }
   );
+  updateLocalStorage(createdFiles, fileContents);
+
   if (fileName === fileToDelete) {
     setFileName("");
     setMarkDown("Enter your text");
@@ -79,7 +91,14 @@ const openFile = (name) => {
   setMarkDown(fileContents[name] || "Enter your text");
   setShowmarkdown(true);
 };
-
+const handleMarkdownChange = (e) => {
+  setMarkDown(e.target.value);
+  if (createdFiles.includes(fileName)) {
+    const newContents = { ...fileContents, [fileName]: e.target.value };
+    setFileContents(newContents);
+    updateLocalStorage(createdFiles, newContents);
+  }
+};
   return (
     <>
      { !showmarkdown ?(
@@ -133,7 +152,7 @@ const openFile = (name) => {
       <textarea 
         className='bg-black w-full box-border font-mono flex-1 p-4 h-full text-white resize-none' 
         value={markDown} 
-        onChange={(e) => setMarkDown(e.target.value)} 
+        onChange={handleMarkdownChange} 
       />
       <div className='relative bg-indigo-400 w-full box-border font-mono flex flex-col p-4 h-full overflow-auto'>
         <div className='flex-grow'>
