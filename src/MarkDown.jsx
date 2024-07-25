@@ -103,41 +103,41 @@ const handleMarkdownChange = (e) => {
     <>
      { !showmarkdown ?(
       <div>
-<div className='bg-black p-5 text-white font-mono text-center font-bold text-3xl h-20 flex items-center justify-center relative'>
-  <img src="hamburger.jpg" id='hamburger' onClick={createFilecontainer} className='h-12 absolute left-5' />
-  <h1 className='mx-auto'>Markdown Editor</h1>
+<div className='bg-black p-5 text-white font-mono text-center font-bold  h-20 flex items-center justify-center relative  '>
+  <img src="hamburger.jpg" id='hamburger' onClick={createFilecontainer} className='h-12 absolute left-5   ' />
+  <h1 className='mx-auto max-ph:ml-24 max-ph:text-2xl '>Markdown Editor</h1>
 </div>
 
 {showFileContainer &&( <div className='absolute top-20 left-0 bg-white h-screen w-64 flex flex-col items-center border-gray-200 '>
-<h3 className='font-bold text-lg mb-2 mt-2'>Created Files</h3>
+<h3 className='font-bold text-lg mb-2 mt-2 '>Created Files</h3>
 <ul className='flex flex-col items-start p-0 '>
 {createdFiles.map((file,index)=>(
-   <li key={index} className='file-item cursor-pointer mb-1 bg-black text-white py-2 px-16 flex justify-between items-center font-mono hover:bg-zinc-600' onClick={() => openFile(file)}>
+   <li key={index} className='file-item cursor-pointer mb-1 bg-black text-white py-2 px-16 flex justify-between items-center font-mono hover:bg-zinc-600  ' onClick={() => openFile(file)}>
    <span >{file}</span>
-   <img src="delete.png"  onClick={(e) => {
+   <img src="delete.png"   onClick={(e) => {
                         e.stopPropagation(); // Prevent triggering the openFile function
                         deleteFile(file);
-                      }} className='h-8 ml-5' />
+                      }} className='h-8 ml-5 ' />
  </li>
 ))}
 </ul>
 </div>)}
     <div className='bg-[url("/background.jpeg")] flex flex-col items-center justify-center h-screen bg-cover bg-center'>
   <h2 className='mb-4 font-mono text-5xl'>Welcome!</h2>
-  <button onClick={createFile} className='bg-blue-500 text-white py-2 px-9 rounded hover:bg-blue-700'>
+  <button onClick={createFile} className='bg-blue-500 text-white py-2 px-9 rounded hover:bg-blue-700 '>
     Create a new file
   </button>
 { showFileInput &&(
   <div>
  <input
           type='text' 
-          className='mt-4 py-2 px-4 rounded border border-gray-300' 
+          className='mt-4 py-2 px-4 rounded border border-gray-300  max-ph:ml-14' 
           value={fileName} 
           onChange={(e) => setFileName(e.target.value)} 
           placeholder='Enter file name'
           required
         />
-        <button onClick={saveFile} className='bg-blue-500 text-white py-2 px-9 ml-4 rounded hover:bg-blue-700'>Save</button>
+        <button onClick={saveFile} className='bg-blue-500 text-white py-2 px-9 ml-4 rounded hover:bg-blue-700  max-ph:ml-32 max-ph:mt-4'>Save</button>
   </div>
  
 )
@@ -161,7 +161,7 @@ const handleMarkdownChange = (e) => {
 
         <button 
           onClick={downloadMarkdown} 
-          className='absolute bottom-4 right-4 bg-blue-500 text-white py-2 px-9 rounded hover:bg-blue-700'
+          className='absolute bottom-4 right-4 bg-blue-500 text-white py-2 px-9 rounded hover:bg-blue-700 min-[320px]:px-1 ml-4'
         >
           Download Markdown
         </button>
