@@ -114,14 +114,14 @@ function MarkDown() {
           {showFileContainer && (
             <div className='absolute top-20 left-0 bg-white h-screen w-64 flex flex-col items-center border-gray-200'>
               <h3 className='font-bold text-lg mb-2 mt-2'>Created Files</h3>
-              <ul className='flex flex-col items-start p-0'>
+              <ul className='flex flex-col items-start p-0 w-full'>
                 {createdFiles.map((file, index) => (
-                  <li key={index} className='file-item cursor-pointer mb-1 bg-black text-white py-2 px-16 flex justify-between items-center font-mono hover:bg-zinc-600' onClick={() => openFile(file)}>
-                    <span>{file}</span>
+                  <li key={index} className='file-item cursor-pointer mb-1 bg-black text-white py-2 px-4 flex justify-between items-center font-mono hover:bg-zinc-600 w-full' onClick={() => openFile(file)}>
+                    <span className='flex-1 overflow-hidden text-ellipsis whitespace-nowrap'>{file}</span>
                     <img src="delete.png" onClick={(e) => {
                       e.stopPropagation();
                       deleteFile(file);
-                    }} className='h-8 ml-5' />
+                    }} className='h-8 ml-2 flex-shrink-0' />
                   </li>
                 ))}
               </ul>
